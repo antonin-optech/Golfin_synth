@@ -4,7 +4,7 @@ from PIL import Image
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
-from objloader import Obj, set_texture  # Assuming this is your custom OBJ loader
+from objloader import Obj, set_texture
 
 # Global variables for camera control
 rx, ry = (0, 0)
@@ -97,7 +97,7 @@ def on_draw():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
-    gluPerspective(45, width / float(height), 0.1, 1000.0)  # Adjust these values as needed
+    gluPerspective(45, width / float(height), 0.1, 1000.0)  # Camera settings
     projection_matrix = glGetFloatv(GL_PROJECTION_MATRIX)
     print(projection_matrix)
     glMatrixMode(GL_MODELVIEW)    
@@ -124,17 +124,6 @@ def on_draw():
     save_frame("shots/frame" + str(frame) + ".bmp", width, height)
     frame += 1    
     glutSwapBuffers()
-
-    # glDisable(GL_DEPTH_TEST)
-    # draw_background()
-    # glEnable(GL_DEPTH_TEST)
-    # glPushMatrix()
-    
-    
-    # glTranslate(position[0], 0, position[2])
-    # glRotatef(10, 0, 1, 0)  # old
-    # glTranslate(0, 20, 0)
-    # glRotatef(90, 1, 0, 0)
 
 def on_resize(width, height):
     glViewport(0, 0, width, height)
@@ -175,7 +164,7 @@ if __name__ == "__main__":
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)
     glutInitWindowSize(width, height)
     glutCreateWindow("OBJ File Viewer")
-    # Initialize the object (Make sure to update the paths accordingly)
+    # Object initialization
     background_image_path = 'texture/green_pad.png'
     load_background_texture(background_image_path)
     
@@ -183,9 +172,6 @@ if __name__ == "__main__":
     filename = 'Golf Ball OBJ.obj'    
     obj = Obj(texture_root, filename, swapyz=True)
     glutDisplayFunc(on_draw)
-    # glutReshapeFunc(on_resize)
-    # glutMouseFunc(on_mouse)
-    # glutMotionFunc(on_motion)
     glutTimerFunc(0, timer, fps)
 
     glEnable(GL_DEPTH_TEST)
